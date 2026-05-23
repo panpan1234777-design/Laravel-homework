@@ -9,6 +9,16 @@
 <body>
     <div>
         <h2>Create New Category</h2>
+        @if($errors->any())
+        <div>
+            <ul>
+                @foreach ($errors->all() as $error )
+                    <li style="color:red">{{$error}}</li>
+
+                @endforeach
+            </ul>
+        </div>
+        @endif
         <form action="{{ route('categories.store')}}" method="POST">
             @csrf
             <label for="name">Category Name:</label>
@@ -16,6 +26,7 @@
             <button type="submit">
                 +Create
             </button>
+            <a href="{{ route('categories.index')}}">Back</a>
         </form>
     </div>
 </body>

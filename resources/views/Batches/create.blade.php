@@ -8,6 +8,19 @@
 </head>
 <body>
     <h1>New Batch</h1>
+
+    @if ($errors->any())
+    <div>
+        <ul>
+            @foreach ($errors->all() as $error )
+            <li style="color:red">{{$error}}</li>
+
+            @endforeach
+        </ul>
+    </div>
+
+
+    @endif
     <form action="{{ route('batches.store')}}" method="POST">
         @csrf
         <label for="name">Batch Name:</label>
@@ -17,6 +30,7 @@
         <button type="submit">
             +Create
         </button>
+        <a href="{{route('batches.index')}}">Back</a>
     </form>
 </div>
 

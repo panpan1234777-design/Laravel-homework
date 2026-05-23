@@ -14,8 +14,11 @@
             <p>{{ $data['id'] }}: {{ $data['name'] }}</p>
             <div>{{ $data['description'] }}</div>
             <a href="{{route('batches.edit',['id'=>$data['id']])}}">Edit</a>
+            <form action="{{route('batches.delete',[$data->id])}}" method="POST">
+                @csrf
+                <button type="submit">Delete</button>
+            </form>
         @endforeach
-
     </div>
 </body>
 </html>
