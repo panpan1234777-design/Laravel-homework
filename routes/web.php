@@ -1,9 +1,11 @@
 <?php
 
-use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\BatchController;
+use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\InstructorController;
 use App\Http\Controllers\StudentController;
+use App\Models\Instructor;
+use Illuminate\Support\Facades\Route;
 
 Route::get('/',function(){
     return view('welcome');
@@ -66,3 +68,10 @@ Route::get('/students/create',[StudentController::class,'create'])->name('studen
 Route::post('/students/store',[StudentController::class,'store'])->name('students.store');
 Route::post('/students/{id}/update',[StudentController::class,'update'])->name('students.update');
 Route::post('/students/{id}/delete',[StudentController::class,'delete'])->name('students.delete');
+
+Route::get('/instructors',[InstructorController::class,'index'])->name('instructors.index');
+Route::get('/instructors/{id}/edit',[InstructorController::class,'edit'])->name('instructors.edit');
+Route::get('/instructors/create',[InstructorController::class,'create'])->name('instructors.create');
+Route::post('/instructors/store',[InstructorController::class,'store'])->name('instructors.store');
+Route::post('/instructors/{id}/update',[InstructorController::class,'update'])->name('instructors.update');
+Route::post('/instructors/{id}/delete',[InstructorController::class,'delete'])->name('instructors.delete');

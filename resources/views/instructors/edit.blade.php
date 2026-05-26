@@ -20,23 +20,27 @@
         @endif
         <div class="card shadow-sm ">
             <div class="card-body">
-        <form action="{{route('batches.update', [$batch->id])}}" method="POST">
+        <form action="{{route('instructors.update', [$instructor->id])}}" method="POST">
             @csrf
             {{-- {{dd($data->id)}} --}}
         <div class="mb-3">
-            <label for="name">Batch Name: </label>
-            <input type="text" value="{{$batch->name}}" class="form-control" name="name"/>
+            <label for="name">Instructor Name: </label>
+            <input type="text" value="{{$instructor->name}}" class="form-control" name="name"/>
         </div>
         <div class="mb-3">
-            <label for="description">Description: </label>
-            <textarea name="description" id="" cols="20" rows="5" class="form-control">{{$batch->description}}</textarea>
+            <label for="email">Email: </label>
+            <textarea name="email" id="" cols="20" rows="5" class="form-control">{{$instructor->email}}</textarea>
+        </div>
+        <div class="mb-3">
+            <label for="phone">Phone: </label>
+            <textarea name="phone" id="" cols="20" rows="5" class="form-control">{{$instructor->phone}}</textarea>
         </div>
 
         <div>
             <button type="submit" class="btn btn-primary btn-sm">
                 Update
             </button>
-            <a href="{{ route('batches.index')}}" class="btn btn-secondary btn-sm">Back</a>
+            <a href="{{ route('instructors.index')}}" class="btn btn-secondary btn-sm">Back</a>
         </div>
     </form>
 
@@ -48,3 +52,4 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js" integrity="sha384-0pUGZvbkm6XF6gxjEnlmuGrJXVbNuzT9qBBavbLwCsOGabYfZo0T0to5eqruptLy" crossorigin="anonymous"></script>
 </body>
 </html>
+

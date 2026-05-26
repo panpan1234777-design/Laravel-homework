@@ -1,28 +1,71 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css">
     <title>Students</title>
 </head>
-<body>
-    <div>
-        <h1>Students</h1>
-        <a href="{{route('students.create')}}">+Create</a>
-        @foreach ($students as $student )
+
+<body class="container bg-light mt-5">
+    <div class="card shadow-sm">
+        <header class="card-header bg-primary text-white">
+            <h1 class="h4">Student</h1>
+        </header>
+        <div class="card-header bg-info"> <a href="{{ route('students.create') }}">+Create</a></div>
+        <table class="table table-hover table-bordered mb-0">
+            <thead class="table-dark">
+                <tr>
+                    <th>ID</th>
+                    <th>Name</th>
+                    <th>Email</th>
+                    <th>Phone</th>
+                    <th>Address</th>
+                    <th>Action</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach ($students as $student)
+                    <tr>
+                        <td>{{ $student['id'] }}</td>
+                        <td>{{ $student['name'] }}</td>
+                        <td>{{ $student['email'] }}</td>
+                        <td>{{ $student['phone'] }}</td>
+                        <td>{{ $student['address'] }}</td>
+                        <td>
+                            <a href="{{ route('students.edit', ['id' => $student->id]) }}" class="btn btn-info btn-sm text-white">
+                                Edit
+                            </a>
+                        </td>
+                        <td>
+                            <form action="{{ route('students.delete', [$student->id]) }}"method="POST">
+                                @csrf
+                                <button type="submit" class="btn btn-danger btn-sm text-white">Delete</button>
+                            </form>
+                        </td>
+                    </tr>
+                @endforeach
+
+            </tbody>
+
+        </table>
+        {{-- @foreach ($students as $student)
         <p>{{$student['id']}}:{{$student['name']}}:{{$student['email']}}:{{$student['phone']}}
         </p>
         <div>
             {{$student['address']}}
         </div>
-        <a href="{{route('students.edit',['id'=>$student])}}">Edit</a>
-        <form action="{{route('students.delete',[$student->id])}}"method="POST">
+        <a href="{{route('students.edit',['id'=>$student])}}">Edit</a> --}}
+        {{-- <form action="{{route('students.delete',[$student->id])}}"method="POST">
             @csrf
             <button type="submit">Delete</button>
         </form>
-        @endforeach
+        @endforeach --}}
     </div>
-
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
 </body>
+
 </html>

@@ -1,6 +1,8 @@
 <?php
 
 namespace Database\Seeders;
+
+use App\Models\Instructor;
 use App\Models\User;
 use Database\Seeders\BatchSeeder;
 use Database\Seeders\CategorySeeder;
@@ -21,5 +23,6 @@ class DatabaseSeeder extends Seeder
         $this->call(CategorySeeder::class);
         $this->call(BatchSeeder::class);
         $this->call(StudentSeeder::class);
+        $this->call(InstructorSeeder::class);
     }
 }
