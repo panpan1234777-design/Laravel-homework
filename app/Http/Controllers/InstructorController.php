@@ -38,6 +38,7 @@ class InstructorController extends Controller
             'name'=>'required|string',
             'email'=>'required|string',
             'phone'=>'nullable|string'
+
         ]);
         Instructor::create($request->all());
         return redirect()->route ('instructors.index');

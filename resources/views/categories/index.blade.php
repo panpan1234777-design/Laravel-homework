@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+{{-- <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -8,10 +8,11 @@
     <title>Category</title>
 </head>
 <body>
+
     <div class="container">
         <h1 class="mt-4">Categories</h1>
         <a href="{{ route('categories.create')}}" class="btn btn-primary btn-sm">Create</a>
-        {{-- {{dd($categories)}} --}}
+
         <table class="table table-scripted table-hover">
             <thead>
                 <tr>
@@ -21,8 +22,7 @@
                 </tr>
             </thead>
             <tbody>
-
-                @foreach ($categories as $category )
+                @foreach ($categories as $category)
                 <tr>
                     <td>{{$category->id}}</td>
                     <td>{{$category->name}}</td>
@@ -34,20 +34,53 @@
                 </form>
                 </td>
                 </tr>
-
                 @endforeach
             </tbody>
         </table>
-        {{-- <a href="{{ route('categories.create') }}">+Create</a>
-        @foreach ($categories as $category)
-        <p>#{{$category->id}}&nbsp;&nbsp; Name: {{$category->name}}</p>
-        <a href="{{route('categories.edit',['id'=>$category['id']])}}">Edit</a>
-        <form action="{{ route('categories.delete', [$category->id])}}"method="POST">
-            @csrf
-            <button type="submit">Delete</button>
-        </form> --}}
-        {{-- @endforeach --}}
     </div>
+
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js" integrity="sha384-0pUGZvbkm6XF6gxjEnlmuGrJXVbNuzT9qBBavbLwCsOGabYfZo0T0to5eqruptLy" crossorigin="anonymous"></script>
 </body>
-</html>
+</html> --}}
+@extends('layouts.app')
+@section('title', 'categories')
+
+@section('content')
+    <div class="page-header">
+        <h3 class="page-title">
+            <span class="page-title-icon bg-light text-white me-2">
+                <i class="mdi mdi-tag-multiple"></i>
+            </span> Categories
+        </h3>
+    </div>
+    <div class="container">
+        {{-- <h1 class="mt-4">Categories</h1> --}}
+        <a href="{{ route('categories.create') }}" class="btn btn-primary btn-sm">Create</a>
+
+        <table class="table table-scripted table-hover">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Name</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach ($categories as $category)
+                    <tr>
+                        <td>{{ $category->id }}</td>
+                        <td>{{ $category->name }}</td>
+                        <td class="d-flex">
+                            <a
+                                href="{{ route('categories.edit', ['id' => $category['id']]) }}"class="btn btn-primary btn-sm me-3">Edit</a>
+                            <form action="{{ route('categories.delete', [$category->id]) }}"method="POST">
+                                @csrf
+                                <button type="submit" class="btn btn-danger btn-sm">Delete</button>
+                            </form>
+                        </td>
+                    </tr>
+                @endforeach
+            </tbody>
+        </table>
+    </div>
+@endsection

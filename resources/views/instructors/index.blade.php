@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+{{-- <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -46,4 +46,57 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js" integrity="sha384-0pUGZvbkm6XF6gxjEnlmuGrJXVbNuzT9qBBavbLwCsOGabYfZo0T0to5eqruptLy" crossorigin="anonymous"></script>
 
 </body>
-</html>
+</html> --}}
+@extends('layouts.app')
+
+@section('title', 'Instructors')
+
+@section('content')
+        <div class="page-header">
+            <h3 class="page-title">
+                <span class="page-title-icon bg-gradient-success text-white me-2">
+                    <i class="mdi mdi-account-tie"></i>
+                </span> Instructors
+            </h3>
+        </div>
+    <div class="container">
+        <div class="card shadow-sm">
+            {{-- <header class="card-header bg-primary text-white">
+                <h1 class="h4">Instructors</h1>
+            </header> --}}
+            <div class="card-header bg-info"><a href="{{ route('instructors.create') }}">+Create</a></div>
+            <table class="table table-hover table-bordered mb-0">
+                <thead class="table-dark">
+                    <tr>
+                        <th>ID</th>
+                        <th>Name</th>
+                        <th>Email</th>
+                        <th>Phone</th>
+                        <th>Action</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach ($instructors as $instructor)
+                        <tr>
+                            <td>{{ $instructor['id'] }}</td>
+                            <td>{{ $instructor['name'] }}</td>
+                            <td>{{ $instructor['email'] }}</td>
+                            <td>{{ $instructor['phone'] }}</td>
+                            <td>
+                                <a href="{{ route('instructors.edit', ['id' => $instructor['id']]) }}"
+                                    class="btn btn-info btn-sm text-white">Edit</a>
+                            </td>
+                            <td>
+                                <form action="{{ route('instructors.delete', [$instructor->id]) }}"method="POST">
+                                    @csrf
+                                    <button type="submit" class="btn btn-danger btn-sm text-white">Delete</button>
+                                </form>
+                            </td>
+                        </tr>
+                    @endforeach
+                </tbody>
+            </table>
+        </div>
+    </div>
+@endsection

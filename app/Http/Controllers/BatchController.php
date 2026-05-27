@@ -21,11 +21,9 @@ class BatchController extends Controller
     }
     public function update(UpdateBatchRequest $request)
     {
+        $data=$request->validated();
         $batch=Batch::find($request->id);
-        $batch->update ([
-            'name' => $request->name,
-            'description'=>$request->description
-        ]);
+        $batch->update ($data);
         return redirect()->route('batches.index');
     }
     public function create()
@@ -34,10 +32,11 @@ class BatchController extends Controller
     }
     public function store(CreateBatchRequest $request)
     {
-        Batch::create([
-            'name'=>$request->name,
-            'description'=> $request->description,
-        ]);
+        // dd('here');
+        // dd($request->all());
+        $data = $request->validated();
+        // dd($data);
+        Batch::create($data);
         return redirect()->route('batches.index');
     }
     public function delete($id)

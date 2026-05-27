@@ -2,8 +2,10 @@
 
 use App\Http\Controllers\BatchController;
 use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\InstructorController;
 use App\Http\Controllers\StudentController;
+use App\Http\Controllers\UserController;
 use App\Models\Instructor;
 use Illuminate\Support\Facades\Route;
 
@@ -75,3 +77,12 @@ Route::get('/instructors/create',[InstructorController::class,'create'])->name('
 Route::post('/instructors/store',[InstructorController::class,'store'])->name('instructors.store');
 Route::post('/instructors/{id}/update',[InstructorController::class,'update'])->name('instructors.update');
 Route::post('/instructors/{id}/delete',[InstructorController::class,'delete'])->name('instructors.delete');
+
+Route::get('/users',[UserController::class,'index'])->name('users.index');
+Route::get('/users/{id}/edit',[UserController::class,'edit'])->name('users.edit');
+Route::get('/users/create',[UserController::class,'create'])->name('users.create');
+Route::post('/users/store',[UserController::class,'store'])->name('users.store');
+Route::post('/users/{id}/update',[UserController::class,'update'])->name('users.update');
+Route::post('/users/{id}/delete',[UserController::class,'delete'])->name('users.delete');
+
+Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');

@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+{{-- <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -17,6 +17,9 @@
                     <th>ID</th>
                     <th>Name</th>
                     <th>Description</th>
+                    <th>Start Date</th>
+                    <th>End Date</th>
+                    <th>Status</th>
                     <th>Action</th>
                     <th>Action</th>
                 </tr>
@@ -27,6 +30,9 @@
                     <td>{{ $data['id'] }}</td>
                     <td>{{ $data['name'] }}</td>
                     <td>{{ $data['description'] }}</td>
+                    <td>{{ $data['start_date'] }}</td>
+                    <td>{{ $data['end_date'] }}</td>
+                    <td>{{ $data['status'] }}</td>
                     <td><a href="{{route('batches.edit',['id'=>$data['id']])}}" class="btn btn-primary btn-sm">Edit</a></td>
                     <td> <form action="{{route('batches.delete',[$data->id])}}" method="POST">
                         @csrf
@@ -36,16 +42,56 @@
                 </tr>
             </tbody>
         </table>
-        {{-- @foreach ($batches as $data)
-            <p>{{ $data['id'] }}: {{ $data['name'] }}</p>
-            <div>{{ $data['description'] }}</div>
-            <a href="{{route('batches.edit',['id'=>$data['id']])}}">Edit</a>
-            <form action="{{route('batches.delete',[$data->id])}}" method="POST">
-                @csrf
-                <button type="submit">Delete</button>
-            </form>
-        @endforeach --}}
     </div>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js" integrity="sha384-0pUGZvbkm6XF6gxjEnlmuGrJXVbNuzT9qBBavbLwCsOGabYfZo0T0to5eqruptLy" crossorigin="anonymous"></script>
 </body>
-</html>
+</html> --}}
+@extends('layouts.app')
+@section('title','Batches')
+@section('content')
+    <div class="page-header">
+        <h3 class="page-title">
+            <span class="page-title-icon bg-gradient-success text-white me-2">
+                <i class="mdi mdi-layers"></i>
+            </span> Batches
+        </h3>
+    </div>
+    <div class="container">
+        {{-- <h1 class="mt-4">Batch List</h1> --}}
+        <a href="{{ route('batches.create') }}" class="btn btn-outline btn-primary">+Create</a>
+        <table class="table table-scripted table-hover">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Name</th>
+                    <th>Description</th>
+                    <th>Start Date</th>
+                    <th>End Date</th>
+                    <th>Status</th>
+                    <th>Action</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach ($batches as $data)
+                <tr>
+                    <td>{{ $data['id'] }}</td>
+                    <td>{{ $data['name'] }}</td>
+                    <td>{{ $data['description'] }}</td>
+                    <td>{{ $data['start_date'] }}</td>
+                    <td>{{ $data['end_date'] }}</td>
+                    <td>{{ $data['status'] }}</td>
+                    <td><a href="{{route('batches.edit',['id'=>$data['id']])}}" class="btn btn-primary btn-sm">Edit</a></td>
+                    <td> <form action="{{route('batches.delete',[$data->id])}}" method="POST">
+                        @csrf
+                        <button type="submit" class="btn btn-danger btn-sm">Delete</button></td>
+                    </form>
+                @endforeach
+                </tr>
+            </tbody>
+        </table>
+    </div>
+@endsection
+
+
+
