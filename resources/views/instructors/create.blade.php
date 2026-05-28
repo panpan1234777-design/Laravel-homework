@@ -64,7 +64,7 @@
         @endif
         <div class="card">
             <div class="card-body">
-                <form action="{{ route('instructors.store') }}" method="POST">
+                <form action="{{ route('instructors.store') }}" method="POST" enctype="multipart/form-data">
                     @csrf
                     <div class="mb-2">
                         <label for="name">Instructor Name:</label>
@@ -79,6 +79,10 @@
             <div class="mb-2">
                 <label for="phone">Phone Number:</label>
                 <input type="text" id="phone" name="phone" placeholder="Enter Phone Number" class="form-control" />
+            </div>
+            <div class="mb-2">
+                <label for="image">Image:</label>
+                <input type="file" id="image" name="image" class="form-control" />
             </div>
             <button type="submit" class="btn btn-primary btn-sm">+Create</button>
             <a href="{{ route('instructors.index') }}" class="btn btn-secondary btn-sm">Back</a>

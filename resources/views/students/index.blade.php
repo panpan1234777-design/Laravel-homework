@@ -87,40 +87,56 @@
         <div class="card-body">
             {{-- <div class="d-flex justify-content-between align-items-center mb-3">
                 <h4 class="card-title mb-0">Student List</h4> --}}
-                <a href="{{ route('students.create') }}" class="btn btn-gradient-success btn-sm">+ Create</a>
-            </div>
-            <div class="table-responsive">
-                <table class="table table-hover">
-                    <thead>
-                        <tr>
-                            <th>ID</th>
-                            <th>NAME</th>
-                            <th>EMAIL</th>
-                            <th>PHONE</th>
-                            <th>ADDRESS</th>
-                            <th>ACTION</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @foreach ($students as $student)
-                            <tr>
-                                <td>{{ $student->id }}</td>
-                                <td>{{ $student->name }}</td>
-                                <td>{{ $student->email }}</td>
-                                <td>{{ $student->phone }}</td>
-                                <td>{{ $student->address ?? '-' }}</td>
-                                <td class="d-flex">
-                                    <a href="{{ route('students.edit', ['id' => $student->id]) }}" class="btn btn-outline-secondary btn-sm me-2">Edit</a>
-                                    <form action="{{ route('students.delete', [$student->id]) }}" method="POST">
-                                        @csrf
-                                        <button class="btn btn-outline-danger btn-sm" type="submit">Delete</button>
-                                    </form>
-                                </td>
-                            </tr>
-                        @endforeach
-                    </tbody>
-                </table>
-            </div>
+            <a href="{{ route('students.create') }}" class="btn btn-gradient-success btn-sm">+ Create</a>
         </div>
+        <div class="table-responsive">
+            <table class="table table-hover">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Batch</th>
+                        <th>NAME</th>
+                        <th>EMAIL</th>
+                        <th>PHONE</th>
+                        <th>ADDRESS</th>
+                        <th>Enrolled_at</th>
+                        <th>Status</th>
+                        <th>Image</th>
+                        <th>ACTION</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach ($students as $student)
+                        <tr>
+                            <td>{{ $student->id }}</td>
+                            <td>{{ $student->batch->name ?? '-' }}</td>
+                            <td>{{ $student->name }}</td>
+                            <td>{{ $student->email }}</td>
+                            <td>{{ $student->phone }}</td>
+                            <td>{{ $student->address ?? '-' }}</td>
+                            <td>{{ $student->enrolled_at }}</td>
+                            <td>{{ $student->status }}</td>
+                            <td>
+                                @if ($student->image)
+                                    <img src="{{ asset('studentImages/' . $student->image) }}" alt="{{ $student->image }}"
+                                        style="width: 50px; height: 50px;">
+                                @else
+                                    -
+                                @endif
+                            </td>
+                            <td class="d-flex">
+                                <a href="{{ route('students.edit', ['id' => $student->id]) }}"
+                                    class="btn btn-outline-secondary btn-sm me-2">Edit</a>
+                                <form action="{{ route('students.delete', [$student->id]) }}" method="POST">
+                                    @csrf
+                                    <button class="btn btn-outline-danger btn-sm" type="submit">Delete</button>
+                                </form>
+                            </td>
+                        </tr>
+                    @endforeach
+                </tbody>
+            </table>
+        </div>
+    </div>
     </div>
 @endsection

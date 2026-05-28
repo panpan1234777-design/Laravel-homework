@@ -28,6 +28,7 @@ class CreateBatchRequest extends FormRequest
                 'start_date'=>'required|date',
                 'end_date'=>'required|date',
                 'status'=>'required',
+                'image'=>'required'
             ];
     }
 }

@@ -26,6 +26,13 @@ class InstructorController extends Controller
             'email'=>$request->email,
             'phone'=>$request->phone
         ]);
+        if($request->hasFile('image')){
+            $imageName=time().'.'. $request->image->extension();
+            $request->image->move(public_path('instructorImages'), $imageName);
+            $data['image'] = $imageName;
+        }
+        $instructor->update($data);
+
         return redirect()->route ('instructors.index');
     }
     public function create()
@@ -37,10 +44,15 @@ class InstructorController extends Controller
         $instructor = $request->validate([
             'name'=>'required|string',
             'email'=>'required|string',
-            'phone'=>'nullable|string'
-
+            'phone'=>'nullable|string',
+            'image'=>'required'
         ]);
-        Instructor::create($request->all());
+        if($request->hasFile('image')){
+            $imageName=time().'.'. $request->image->extension();
+            $request->image->move(public_path('instructorImages'), $imageName);
+            $instructor =array_merge($instructor,['image'=>$imageName]);
+        }
+        Instructor::create($instructor);
         return redirect()->route ('instructors.index');
     }
     public function delete($id)
@@ -49,5 +61,4 @@ class InstructorController extends Controller
         $instructor->delete();
         return redirect()->route('instructors.index');
     }
-
 }

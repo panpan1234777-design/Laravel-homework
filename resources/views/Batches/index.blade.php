@@ -47,7 +47,7 @@
 </body>
 </html> --}}
 @extends('layouts.app')
-@section('title','Batches')
+@section('title', 'Batches')
 @section('content')
     <div class="page-header">
         <h3 class="page-title">
@@ -68,30 +68,39 @@
                     <th>Start Date</th>
                     <th>End Date</th>
                     <th>Status</th>
+                    <th>Image</th>
                     <th>Action</th>
                     <th>Action</th>
                 </tr>
             </thead>
             <tbody>
                 @foreach ($batches as $data)
-                <tr>
-                    <td>{{ $data['id'] }}</td>
-                    <td>{{ $data['name'] }}</td>
-                    <td>{{ $data['description'] }}</td>
-                    <td>{{ $data['start_date'] }}</td>
-                    <td>{{ $data['end_date'] }}</td>
-                    <td>{{ $data['status'] }}</td>
-                    <td><a href="{{route('batches.edit',['id'=>$data['id']])}}" class="btn btn-primary btn-sm">Edit</a></td>
-                    <td> <form action="{{route('batches.delete',[$data->id])}}" method="POST">
-                        @csrf
-                        <button type="submit" class="btn btn-danger btn-sm">Delete</button></td>
-                    </form>
+                    <tr>
+                        <td>{{ $data['id'] }}</td>
+                        <td>{{ $data['name'] }}</td>
+                        <td>{{ $data['description'] }}</td>
+                        <td>{{ $data['start_date'] }}</td>
+                        <td>{{ $data['end_date'] }}</td>
+                        <td>{{ $data['status'] }}</td>
+                        <td>
+                            @if ($data->image)
+                                <img src="{{ asset('batchImages/' . $data->image) }}" alt="{{ $data->image }}"
+                                    style="width: 50px; height: 50px;">
+                            @else
+                                -
+                            @endif
+                        </td>
+                        <td><a href="{{ route('batches.edit', ['id' => $data['id']]) }}"
+                                class="btn btn-primary btn-sm">Edit</a></td>
+                        <td>
+                            <form action="{{ route('batches.delete', [$data->id]) }}" method="POST">
+                                @csrf
+                                <button type="submit" class="btn btn-danger btn-sm">Delete</button>
+                        </td>
+                        </form>
                 @endforeach
                 </tr>
             </tbody>
         </table>
     </div>
 @endsection
-
-
-

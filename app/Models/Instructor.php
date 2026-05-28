@@ -10,6 +10,7 @@ class Instructor extends Model
     protected $fillable= [
         'name',
         'email',
-        'phone'
+        'phone',
+        'image'
     ];
 }

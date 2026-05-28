@@ -71,7 +71,8 @@
         @endif
         <div class="card shadow-sm ">
             <div class="card-body">
-                <form action="{{ route('instructors.update', [$instructor->id]) }}" method="POST">
+                <form action="{{ route('instructors.update', [$instructor->id]) }}" method="POST"
+                    enctype="multipart/form-data">
                     @csrf
                     <div class="mb-3">
                         <label for="name">Instructor Name: </label>
@@ -85,7 +86,14 @@
                         <label for="phone">Phone: </label>
                         <textarea name="phone" id="" cols="20" rows="5" class="form-control">{{ $instructor->phone }}</textarea>
                     </div>
-
+                    <div>
+                        <label for="image">image:</label>
+                        @if ($instructor->image)
+                            <img src="{{ asset('instructorImage/' . $instructor->image) }}" alt="{{ $instructor->image }}"
+                                style="width: 50px; height: 50px;">
+                        @endif
+                        <input type="file" name="image" class="form-control">
+                    </div>
                     <div>
                         <button type="submit" class="btn btn-primary btn-sm">
                             Update

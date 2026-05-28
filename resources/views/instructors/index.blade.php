@@ -52,13 +52,13 @@
 @section('title', 'Instructors')
 
 @section('content')
-        <div class="page-header">
-            <h3 class="page-title">
-                <span class="page-title-icon bg-gradient-success text-white me-2">
-                    <i class="mdi mdi-account-tie"></i>
-                </span> Instructors
-            </h3>
-        </div>
+    <div class="page-header">
+        <h3 class="page-title">
+            <span class="page-title-icon bg-gradient-success text-white me-2">
+                <i class="mdi mdi-account-tie"></i>
+            </span> Instructors
+        </h3>
+    </div>
     <div class="container">
         <div class="card shadow-sm">
             {{-- <header class="card-header bg-primary text-white">
@@ -72,6 +72,7 @@
                         <th>Name</th>
                         <th>Email</th>
                         <th>Phone</th>
+                        <th>Image</th>
                         <th>Action</th>
                         <th>Action</th>
                     </tr>
@@ -83,6 +84,14 @@
                             <td>{{ $instructor['name'] }}</td>
                             <td>{{ $instructor['email'] }}</td>
                             <td>{{ $instructor['phone'] }}</td>
+                            <td>
+                                @if ($instructor->image)
+                                    <img src="{{ asset('instructorImages/' . $instructor->image) }}"
+                                        alt="{{ $instructor->image }}" style="width: 50px; height: 50px;">
+                                @else
+                                    -
+                                @endif
+                            </td>
                             <td>
                                 <a href="{{ route('instructors.edit', ['id' => $instructor['id']]) }}"
                                     class="btn btn-info btn-sm text-white">Edit</a>

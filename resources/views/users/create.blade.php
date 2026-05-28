@@ -28,6 +28,10 @@
             <input type="text" id="phone" name="phone" placeholder="Enter Phone Number" class="form-control"/>
         </div>
         <div class="mb-2">
+            <label for="password">Password:</label>
+            <input type="text" id="password" name="password" placeholder="Enter Password" class="form-control"/>
+        </div>
+        <div class="mb-2">
             <label for="address">Address:</label>
             <textarea name="address" id="address" cols="20" rows="10" placeholder="Enter Address" class="form-control"></textarea>
         </div>

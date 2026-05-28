@@ -63,7 +63,7 @@
         @endif
         <div class="card">
             <div class="card-body">
-                <form action="{{ route('students.update', [$student->id]) }}" method="POST">
+                <form action="{{ route('students.update', [$student->id]) }}" method="POST" enctype="multipart/form-data">
                     @csrf
                     <div>
                         <label for="name">Name:</label>
@@ -80,6 +80,28 @@
                     <div>
                         <label for="address">address:</label>
                         <textarea name="address" id="" cols="20" rows="5" class="form-control">{{ $student->address }}</textarea>
+                    </div>
+                    <div>
+                        <label for="enrolled_at">Enrolled_at:</label>
+                        <input type="date" name="enrolled_at" value="{{ $student->enrolled_at }}" class="form-control" />
+                    </div>
+                    <div>
+                        <label for="status" class="form-label">Status: </label>
+                        <select name="status" class="form-control">
+                            <option value="active" {{ $student->status == 'active' ? 'selected' : '' }}>Active</option>
+                            <option value="inactive" {{ $student->status == 'inactive' ? 'selected' : '' }}>Inactive
+                            </option>
+                            <option value="graduated" {{ $student->status == 'graduated' ? 'selected' : '' }}>Graduated
+                            </option>
+                        </select>
+                    </div>
+                    <div>
+                        <label for="image">image:</label>
+                        @if ($student->image)
+                            <img src="{{ asset('studentImage/' . $student->image) }}" alt="{{ $student->image }}"
+                                style="width: 50px; height: 50px;">
+                        @endif
+                        <input type="file" name="image" class="form-control">
                     </div>
                     <button type="submit" class="btn btn-primary btn-sm">
                         Update

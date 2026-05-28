@@ -13,7 +13,7 @@
     @if ($errors->any())
     <div>
         <ul>
-            @foreach ($errors->all() as $error )
+            @foreach ($errors->all() as $error)
             <li style="color:red">{{$error}}</li>
 
             @endforeach
@@ -52,7 +52,7 @@
             {{$message}}
         </div>
         @enderror --}}
-    {{-- </div>
+{{-- </div>
         <button type="submit" class="btn btn-primary btn-sm">
             +Create
         </button>
@@ -89,7 +89,7 @@
                     </ul>
                 </div>
             @endif
-            <form action="{{ route('batches.store') }}" method="POST">
+            <form action="{{ route('batches.store') }}" method="POST" enctype="multipart/form-data">
                 @csrf
                 <div class="form-group">
                     <label for="name">Batch Name</label>
@@ -114,6 +114,10 @@
                         <option value="ongoing">Ongoing</option>
                         <option value="complete">Complete</option>
                     </select>
+                </div>
+                <div class="mb-2">
+                    <label for="image">Image:</label>
+                    <input type="file" id="image" name="image" class="form-control" />
                 </div>
                 <button type="submit" class="btn btn-gradient-success me-2">+ Create</button>
                 <a href="{{ route('batches.index') }}" class="btn btn-light">Back</a>

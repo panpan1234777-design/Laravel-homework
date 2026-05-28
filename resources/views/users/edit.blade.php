@@ -85,7 +85,7 @@
                         <input type="text" value="{{ $user->email }}" name="email" class="form-control" />
                     </div>
                     <div>
-                        <label for="email">password:</label>
+                        <label for="password">password:</label>
                         <input type="text" value="{{ $user->password }}" name="password" class="form-control" />
                     </div>
                     <div>

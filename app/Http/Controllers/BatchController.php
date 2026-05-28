@@ -12,18 +12,24 @@ class BatchController extends Controller
     public function index()
     {
         $batches = Batch::all();
-        return view('batches.index',compact('batches'));
+        return view('batches.index', compact('batches'));
     }
     public function edit($id)
     {
-        $batch =Batch::find($id);
-        return view('Batches.edit',compact('batch'));
+        $batch = Batch::find($id);
+        return view('Batches.edit', compact('batch'));
     }
     public function update(UpdateBatchRequest $request)
     {
-        $data=$request->validated();
-        $batch=Batch::find($request->id);
-        $batch->update ($data);
+        $data = $request->validated();
+        $batch = Batch::find($request->id);
+
+        if ($request->hasFile('image')) {
+            $imageName = time() . '.' . $request->image->extension();
+            $request->image->move(public_path('batchImages'), $imageName);
+            $data['image'] = $imageName;
+        }
+        $batch->update($data);
         return redirect()->route('batches.index');
     }
     public function create()
@@ -36,6 +42,11 @@ class BatchController extends Controller
         // dd($request->all());
         $data = $request->validated();
         // dd($data);
+        if ($request->hasFile('image')) {
+            $imageName = time() . '.' . $request->image->extension();
+            $request->image->move(public_path('batchImages'), $imageName);
+            $data = array_merge($data, ['image' => $imageName]);
+        }
         Batch::create($data);
         return redirect()->route('batches.index');
     }
