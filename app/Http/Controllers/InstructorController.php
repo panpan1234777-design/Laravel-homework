@@ -4,23 +4,30 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\UpdateInstructorRequest;
 use App\Models\Instructor;
+use App\Repositories\Instructor\InstructorRepositoryInterface;
 use Illuminate\Http\Request;
 
 class InstructorController extends Controller
 {
+    protected $instructorRepository;
+    public function __construct(InstructorRepositoryInterface $instructorRepository)
+    {
+        $this->instructorRepository = $instructorRepository;
+
+    }
     public function index()
     {
-        $instructors = Instructor::all();
+        $instructors = $this->instructorRepository->index();
         return view('instructors.index', compact('instructors'));
     }
     public function edit($id)
     {
-        $instructor =Instructor::find($id);
+        $instructor = $this->instructorRepository->show($id);
         return view('instructors.edit', compact('instructor'));
     }
     public function update(UpdateInstructorRequest $request)
     {
-        $instructor=Instructor::find($request->id);
+        $instructor= $this->instructorRepository->show($request->id);
         $instructor->update ([
             'name'=>$request->name,
             'email'=>$request->email,
@@ -52,12 +59,12 @@ class InstructorController extends Controller
             $request->image->move(public_path('instructorImages'), $imageName);
             $instructor =array_merge($instructor,['image'=>$imageName]);
         }
-        Instructor::create($instructor);
+        $this->instructorRepository->store($instructor);
         return redirect()->route ('instructors.index');
     }
     public function delete($id)
     {
-        $instructor=Instructor::find($id);
+        $instructor=$this->instructorRepository->show($id);
         $instructor->delete();
         return redirect()->route('instructors.index');
     }

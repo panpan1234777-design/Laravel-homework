@@ -64,6 +64,7 @@
                 <tr>
                     <th>ID</th>
                     <th>Name</th>
+                    <th>Instructors</th>
                     <th>Description</th>
                     <th>Start Date</th>
                     <th>End Date</th>
@@ -78,6 +79,13 @@
                     <tr>
                         <td>{{ $data['id'] }}</td>
                         <td>{{ $data['name'] }}</td>
+                        <td>
+                            @if ($data->instructors->isNotEmpty())
+                                {{$data->instructors->pluck('name')->join(',')}}
+                            @else
+                            -
+                            @endif
+                        </td>
                         <td>{{ $data['description'] }}</td>
                         <td>{{ $data['start_date'] }}</td>
                         <td>{{ $data['end_date'] }}</td>

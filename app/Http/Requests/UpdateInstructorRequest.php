@@ -26,7 +26,7 @@ class UpdateInstructorRequest extends FormRequest
             'name'=>'required|string',
             'email'=>'nullable|string',
             'phone'=>'required|string',
-            'image'=>'required'
+            'image'=>'nullable'
 
         ];
     }

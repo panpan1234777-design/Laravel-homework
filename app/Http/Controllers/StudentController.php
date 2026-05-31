@@ -5,25 +5,31 @@ namespace App\Http\Controllers;
 use App\Http\Requests\UpdateStudentRequest;
 use App\Models\Batch;
 use App\Models\Student;
+use App\Repositories\Student\StudentRepositoryInterface;
 use Illuminate\Http\Request;
 
 
 
 class StudentController extends Controller
 {
+    protected $studentRepository;
+    public function __construct(StudentRepositoryInterface $studentRepository)
+    {
+        $this->studentRepository=$studentRepository;
+    }
     public function index()
     {
-        $students= Student::with('batch')->get();
+        $students= $this->studentRepository->index();
         return view('students.index',compact('students'));
     }
     public function edit($id)
     {
-        $student = Student::find($id);
+        $student = $this->studentRepository->show($id);
         return view('students.edit',compact('student'));
     }
     public function update(UpdateStudentRequest $request)
     {
-        $student=Student::find($request->id);
+        $student= $this->studentRepository->show($request->id);
         $data = [
             'name'=>$request->name,
             'email'=>$request->email,
@@ -43,7 +49,7 @@ class StudentController extends Controller
     public function create()
     {
         // dd('here');
-        $batches = Batch::get();
+        $batches = $this->studentRepository->getBatches();
         return view('students.create',compact('batches'));
     }
     public function store(Request $request)
@@ -64,12 +70,12 @@ class StudentController extends Controller
             $request->image->move(public_path('studentImages'), $imageName);
             $data=array_merge($student,['image'=>$imageName]);
         }
-        Student::create($data);
+        $this->studentRepository->store($data);
         return redirect()->route('students.index');
     }
     public function delete($id)
     {
-        $student = Student::find($id);
+        $student = $this->studentRepository->show($id);
         $student->delete();
         return redirect()->route('students.index');
     }

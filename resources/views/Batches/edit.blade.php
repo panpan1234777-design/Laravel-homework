@@ -93,6 +93,7 @@
                         <label for="name">Batch Name: </label>
                         <input type="text" value="{{ $batch->name }}" class="form-control" name="name" />
                     </div>
+
                     <div class="mb-3">
                         <label for="description">Description: </label>
                         <textarea name="description" id="" cols="20" rows="5" class="form-control">{{ $batch->description }}</textarea>
@@ -123,6 +124,16 @@
                                 style="width: 50px; height: 50px;">
                         @endif
                         <input type="file" name="image" class="form-control">
+                    </div>
+                    <div class="form-group">
+                        <label for="instructor">Select Instructor</label>
+                        @foreach ($instructors as $instructor)
+                        <input type="checkbox" name="instructor_ids[]" id="instructor_{{$instructor->id}}" value="{{$instructor->id}}"
+                        {{in_array ($instructor->id,$batch->instructors->pluck('id')->toArray()) ? 'checked': ''}}>
+                        <label for="instructor_{{$instructor->id}}">
+                            {{$instructor->name}}
+                        </label>
+                        @endforeach
                     </div>
 
                     <div>

@@ -26,7 +26,7 @@ class UpdateStudentRequest extends FormRequest
             'name'=>'required|string',
             'email'=>'required|string',
             'phone'=>'required|string',
-            'image'=>'required',
+            'image'=>'nullable',
             'enrolled_at'=>'nullable|date',
             'status'=>'nullable',
 
