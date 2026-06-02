@@ -1,7 +1,6 @@
 <?php
 namespace App\Repositories\Batch;
 use App\Models\Batch;
-use App\Models\Instructor;
 
 class BatchRepository implements BatchRepositoryInterface
 {
@@ -18,8 +17,4 @@ class BatchRepository implements BatchRepositoryInterface
         return Batch::create($data);
     }
 
-    public function getInstructors()
-    {
-        return Instructor::get();
-    }
 }

@@ -7,5 +7,4 @@ interface BatchRepositoryInterface
     public function show($id);
     public function store($data);
 
-    public function getInstructors();
 }

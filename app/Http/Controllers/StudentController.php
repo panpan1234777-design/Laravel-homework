@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\UpdateStudentRequest;
 use App\Models\Batch;
 use App\Models\Student;
+use App\Repositories\Batch\BatchRepositoryInterface;
 use App\Repositories\Student\StudentRepositoryInterface;
 use Illuminate\Http\Request;
 
@@ -13,9 +14,11 @@ use Illuminate\Http\Request;
 class StudentController extends Controller
 {
     protected $studentRepository;
-    public function __construct(StudentRepositoryInterface $studentRepository)
+    protected $batchRepository;
+    public function __construct(StudentRepositoryInterface $studentRepository,BatchRepositoryInterface $batchRepository)
     {
         $this->studentRepository=$studentRepository;
+        $this->batchRepository = $batchRepository;
     }
     public function index()
     {
@@ -25,7 +28,8 @@ class StudentController extends Controller
     public function edit($id)
     {
         $student = $this->studentRepository->show($id);
-        return view('students.edit',compact('student'));
+        $batches = $this->batchRepository->index();
+        return view('students.edit',compact('student','batches'));
     }
     public function update(UpdateStudentRequest $request)
     {
@@ -49,7 +53,7 @@ class StudentController extends Controller
     public function create()
     {
         // dd('here');
-        $batches = $this->studentRepository->getBatches();
+        $batches = $this->batchRepository->index();
         return view('students.create',compact('batches'));
     }
     public function store(Request $request)

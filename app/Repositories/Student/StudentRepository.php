@@ -1,7 +1,6 @@
 <?php
 namespace App\Repositories\Student;
 use App\Models\Student;
-use App\Models\Batch;
 
 class StudentRepository implements StudentRepositoryInterface
 {
@@ -16,10 +15,6 @@ class StudentRepository implements StudentRepositoryInterface
     public function store($data)
     {
         return Student::create($data);
-    }
-    public function getBatches()
-    {
-        return Batch::get();
     }
 }
 

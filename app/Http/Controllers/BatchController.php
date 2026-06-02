@@ -6,15 +6,17 @@ use App\Http\Requests\CreateBatchRequest;
 use App\Http\Requests\UpdateBatchRequest;
 use Illuminate\Http\Request;
 use App\Models\Batch;
-use App\Models\Instructor;
 use App\Repositories\Batch\BatchRepositoryInterface;
+use App\Repositories\Instructor\InstructorRepositoryInterface;
 
 class BatchController extends Controller
 {
     protected $batchRepository;
-    public function __construct(BatchRepositoryInterface $batchRepository)
+    protected $instructorRepository;
+    public function __construct(BatchRepositoryInterface $batchRepository,InstructorRepositoryInterface $instructorRepository)
     {
         $this->batchRepository =$batchRepository;
+        $this->instructorRepository =$instructorRepository;
     }
     public function index()
     {
@@ -24,7 +26,7 @@ class BatchController extends Controller
     public function edit($id)
     {
         $batch = $this->batchRepository->show($id);
-        $instructors = $this->batchRepository->getInstructors();
+        $instructors = $this->instructorRepository->index();
         return view('batches.edit', compact('batch','instructors'));
     }
     public function update(UpdateBatchRequest $request, $id)
@@ -45,7 +47,7 @@ class BatchController extends Controller
     }
     public function create()
     {
-        $instructors = $this->batchRepository->getinstructors();
+        $instructors = $this->instructorRepository->index();
         return view('batches.create', compact('instructors'));
     }
     public function store(CreateBatchRequest $request)
