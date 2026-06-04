@@ -58,7 +58,10 @@
     </div>
     <div class="container">
         {{-- <h1 class="mt-4">Batch List</h1> --}}
+
+        @can('batchCreate')
         <a href="{{ route('batches.create') }}" class="btn btn-outline btn-primary">+Create</a>
+        @endcan
         <table class="table table-scripted table-hover">
             <thead>
                 <tr>
@@ -98,12 +101,19 @@
                                 -
                             @endif
                         </td>
-                        <td><a href="{{ route('batches.edit', ['id' => $data['id']]) }}"
-                                class="btn btn-primary btn-sm">Edit</a></td>
                         <td>
+                            @can('batchUpdate')
+                            <a href="{{ route('batches.edit', ['id' => $data['id']]) }}"
+                                class="btn btn-primary btn-sm">Edit</a></td>
+                            @endcan
+                        <td>
+                            @can('batchDelete')
+
+
                             <form action="{{ route('batches.delete', [$data->id]) }}" method="POST">
                                 @csrf
                                 <button type="submit" class="btn btn-danger btn-sm">Delete</button>
+                                @endcan
                         </td>
                         </form>
                 @endforeach

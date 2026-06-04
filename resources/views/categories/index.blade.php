@@ -55,7 +55,11 @@
     </div>
     <div class="container">
         {{-- <h1 class="mt-4">Categories</h1> --}}
-        <a href="{{ route('categories.create') }}" class="btn btn-primary btn-sm">Create</a>
+
+        @can('categoryCreate')
+            <a href="{{ route('categories.create') }}" class="btn btn-primary btn-sm">Create</a>
+        @endcan
+
 
         <table class="table table-scripted table-hover">
             <thead>
@@ -71,12 +75,17 @@
                         <td>{{ $category->id }}</td>
                         <td>{{ $category->name }}</td>
                         <td class="d-flex">
-                            <a
-                                href="{{ route('categories.edit', ['id' => $category['id']]) }}"class="btn btn-primary btn-sm me-3">Edit</a>
-                            <form action="{{ route('categories.delete', [$category->id]) }}"method="POST">
-                                @csrf
-                                <button type="submit" class="btn btn-danger btn-sm">Delete</button>
-                            </form>
+                            @can('categoryEdit')
+                                <a
+                                    href="{{ route('categories.edit', ['id' => $category['id']]) }}"class="btn btn-primary btn-sm me-3">Edit</a>
+                            @endcan
+                            @can('categoryDelete')
+                                <form action="{{ route('categories.delete', [$category->id]) }}"method="POST">
+                                    @csrf
+                                    <button type="submit" class="btn btn-danger btn-sm">Delete</button>
+                                </form>
+                            @endcan
+
                         </td>
                     </tr>
                 @endforeach

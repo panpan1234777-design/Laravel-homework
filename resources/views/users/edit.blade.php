@@ -96,6 +96,18 @@
                         <label for="address">address:</label>
                         <textarea name="address" id="" cols="20" rows="5" class="form-control">{{ $user->address }}</textarea>
                     </div>
+                    <div class="mb-2">
+                        <label>Role</label>
+                        <select name="role">
+                            @foreach ($roles as $role )
+                            <option value="{{$role->name}}" {{$user->hasRole($role->name)? 'selected' : ''}}>
+                                {{$role->name}}
+                            </option>
+
+                            @endforeach
+                        </select> <br>
+                    </div>
+                    
                     <button type="submit" class="btn btn-primary btn-sm">
                         Update
                     </button>

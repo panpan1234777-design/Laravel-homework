@@ -64,7 +64,10 @@
             {{-- <header class="card-header bg-primary text-white">
                 <h1 class="h4">Instructors</h1>
             </header> --}}
-            <div class="card-header bg-info"><a href="{{ route('instructors.create') }}">+Create</a></div>
+            @can('instructorCreate')
+                <div class="card-header bg-info"><a href="{{ route('instructors.create') }}">+Create</a></div>
+            @endcan
+
             <table class="table table-hover table-bordered mb-0">
                 <thead class="table-dark">
                     <tr>
@@ -93,14 +96,20 @@
                                 @endif
                             </td>
                             <td>
-                                <a href="{{ route('instructors.edit', ['id' => $instructor['id']]) }}"
-                                    class="btn btn-info btn-sm text-white">Edit</a>
+                                @can('instructorEdit')
+                                    <a href="{{ route('instructors.edit', ['id' => $instructor['id']]) }}"
+                                        class="btn btn-info btn-sm text-white">Edit</a>
+                                @endcan
+
                             </td>
                             <td>
-                                <form action="{{ route('instructors.delete', [$instructor->id]) }}"method="POST">
-                                    @csrf
-                                    <button type="submit" class="btn btn-danger btn-sm text-white">Delete</button>
-                                </form>
+                                @can('instructorDelete')
+                                    <form action="{{ route('instructors.delete', [$instructor->id]) }}"method="POST">
+                                        @csrf
+                                        <button type="submit" class="btn btn-danger btn-sm text-white">Delete</button>
+                                    </form>
+                                @endcan
+
                             </td>
                         </tr>
                     @endforeach

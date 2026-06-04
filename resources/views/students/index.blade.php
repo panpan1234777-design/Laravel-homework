@@ -87,7 +87,10 @@
         <div class="card-body">
             {{-- <div class="d-flex justify-content-between align-items-center mb-3">
                 <h4 class="card-title mb-0">Student List</h4> --}}
-            <a href="{{ route('students.create') }}" class="btn btn-gradient-success btn-sm">+ Create</a>
+            @can('studentCreate')
+                <a href="{{ route('students.create') }}" class="btn btn-gradient-success btn-sm">+ Create</a>
+            @endcan
+
         </div>
         <div class="table-responsive">
             <table class="table table-hover">
@@ -125,12 +128,16 @@
                                 @endif
                             </td>
                             <td class="d-flex">
-                                <a href="{{ route('students.edit', ['id' => $student->id]) }}"
-                                    class="btn btn-outline-secondary btn-sm me-2">Edit</a>
-                                <form action="{{ route('students.delete', [$student->id]) }}" method="POST">
-                                    @csrf
-                                    <button class="btn btn-outline-danger btn-sm" type="submit">Delete</button>
-                                </form>
+                                @can('studentEdit')
+                                    <a href="{{ route('students.edit', ['id' => $student->id]) }}"
+                                        class="btn btn-outline-secondary btn-sm me-2">Edit</a>
+                                @endcan
+                                @can('studentDelete')
+                                    <form action="{{ route('students.delete', [$student->id]) }}" method="POST">
+                                        @csrf
+                                        <button class="btn btn-outline-danger btn-sm" type="submit">Delete</button>
+                                    </form>
+                                @endcan
                             </td>
                         </tr>
                     @endforeach

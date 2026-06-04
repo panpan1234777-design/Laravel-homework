@@ -3,8 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\UpdateUserRequest;
-use Illuminate\Http\Request;
 use App\Models\User;
+use Illuminate\Http\Request;
+use Spatie\Permission\Models\Role;
 
 class UserController extends Controller
 {
@@ -16,7 +17,8 @@ class UserController extends Controller
     public function edit($id)
     {
         $user = User ::find($id);
-        return view('users.edit',compact('user'));
+        $roles = Role::all();
+        return view('users.edit',compact('user','roles'));
     }
     public function update(UpdateUserRequest $request)
     {
@@ -28,23 +30,25 @@ class UserController extends Controller
             'password'=>$request->password,
             'address'=>$request->address
         ]);
+        $user->syncRoles($request->role);
         return redirect()->route('users.index');
     }
     public function create()
     {
-        // dd('here');
-        return view('users.create');
+        $roles= Role::all();
+        return view('users.create', compact('roles'));
     }
     public function store(Request $request)
     {
-        $user = $request->validate([
+        $validated = $request->validate([
             'name'=>'required|string',
             'email'=>'string',
             'phone'=>'string',
             'password'=>'required|string',
             'address'=>'string'
         ]);
-        User::create($request->all());
+        $user = User::create($validated);
+        $user->assignRole($request->role);
         return redirect()->route('users.index');
     }
     public function delete($id)

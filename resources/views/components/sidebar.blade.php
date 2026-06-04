@@ -104,5 +104,19 @@
                 <i class="mdi mdi-account-tie menu-icon"></i>
             </a>
         </li>
+
+        <li class="nav-item {{ request()->routeIs('permissions.*') ? 'active' : '' }}">
+            <a class="nav-link" href="{{ route('permissions.index') }}">
+                <span class="menu-title">Permissions</span>
+                <i class="mdi mdi-account-tie menu-icon"></i>
+            </a>
+        </li>
+
+        <li class="nav-item {{ request()->routeIs('roles.*') ? 'active' : '' }}">
+            <a class="nav-link" href="{{ route('roles.index') }}">
+                <span class="menu-title">Roles</span>
+                <i class="mdi mdi-account-tie menu-icon"></i>
+            </a>
+        </li>
     </ul>
 </nav>

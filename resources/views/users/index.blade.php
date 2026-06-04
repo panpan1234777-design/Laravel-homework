@@ -20,9 +20,10 @@
                     <th>ID</th>
                     <th>Name</th>
                     <th>Email</th>
-                    <th>Password</th>
+                    {{-- <th>Password</th> --}}
                     <th>Phone</th>
                     <th>Address</th>
+                    <th>Roles</th>
                     <th>Action</th>
                     <th>Action</th>
                 </tr>
@@ -33,9 +34,14 @@
                         <td>{{ $user['id'] }}</td>
                         <td>{{ $user['name'] }}</td>
                         <td>{{ $user['email'] }}</td>
-                        <td>{{ $user['password'] }}</td>
+                        {{-- <td>{{ $user['password'] }}</td> --}}
                         <td>{{ $user['phone'] }}</td>
                         <td>{{ $user['address'] }}</td>
+                        <td>
+                            @foreach ($user->roles as $role )
+                                {{$role->name}}
+                            @endforeach
+                        </td>
                         <td>
                             <a href="{{ route('users.edit', ['id' => $user->id]) }}" class="btn btn-info btn-sm text-white">
                                 Edit

@@ -35,6 +35,17 @@
             <label for="address">Address:</label>
             <textarea name="address" id="address" cols="20" rows="10" placeholder="Enter Address" class="form-control"></textarea>
         </div>
+        <div class="mb-2">
+            <label>Role</label>
+            <select name="role">
+                @foreach ($roles as $role )
+                <option value="{{$role->name}}">
+                    {{$role->name}}
+                </option>
+                @endforeach
+            </select> <br>
+        </div>
+
         <button type="submit" class="btn btn-primary btn-sm">+Create</button>
         <a href="{{route('users.index')}}" class="btn btn-secondary btn-sm">Back</a>
     </form>
