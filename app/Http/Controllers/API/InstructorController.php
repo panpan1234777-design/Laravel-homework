@@ -4,15 +4,23 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\API\BaseController;
 use App\Models\Instructor;
+use App\Repositories\Instructor\InstructorRepositoryInterface;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 
 class InstructorController extends BaseController
 {
+    protected $instructorRepository;
+    public function __construct(InstructorRepositoryInterface $instructorRepository)
+
+    {
+        $this->instructorRepository = $instructorRepository;
+    }
     public function index()
     {
-        $instructors = Instructor::all();
+
+        $instructors = $this->instructorRepository->index();
         return $this->success($instructors, "Instructors retrieved successfully", 200);
     }
 
@@ -29,20 +37,20 @@ class InstructorController extends BaseController
         }
 
         $data = $validator->validated();
-        $instructor = Instructor::create($data);
+        $instructor = $this->instructorRepository->store($data);
 
         return $this->success($instructor, "Instructor created successfully", 201);
     }
 
     public function show($id)
     {
-        $instructor = Instructor::find($id);
+        $instructor = $this->instructorRepository->show($id);
         return $this->success($instructor, "Instructor showed successfully", 200);
     }
 
     public function update(Request $request, $id)
     {
-        $instructor = Instructor::find($id);
+        $instructor = $this->instructorRepository->show($id);
 
         $validator = Validator::make($request->all(), [
             'name'     => 'required|string',
@@ -61,7 +69,7 @@ class InstructorController extends BaseController
         }
     public function delete($id)
     {
-        $instructor = Instructor::find($id);
+        $instructor = $this->instructorRepository->show($id);
         $instructor->delete();
 
         return $this->success(null, "Instructor deleted successfully", 200);

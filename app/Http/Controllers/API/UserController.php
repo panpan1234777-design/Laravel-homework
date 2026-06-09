@@ -4,25 +4,32 @@ namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\API\BaseController;
 use App\Models\User;
+use App\Repositories\User\UserRepositoryInterface;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 
 class UserController extends BaseController
 {
+    protected $userRepository;
+    public function __construct(UserRepositoryInterface $userRepository)
+    {
+        $this->userRepository = $userRepository;
+    }
+
     public function index()
     {
-        $users = User::with('roles')->get();
+        $users = $this->userRepository->index();
         return $this->success($users,"Successfully",200);
     }
     public function show($id)
     {
-        $user = User::with('roles')->find($id);
+        $user = $this->userRepository->show($id);
         return $this->success($user,"User Show Successfully",200);
     }
     public function delete($id)
     {
-        $user = User::find($id);
+        $user = $this->userRepository->show($id);
         $user->delete();
         return $this->success($user,"User delete Successfully ",200);
     }
@@ -37,7 +44,7 @@ class UserController extends BaseController
         if($validator->fails()){
             return $this->error("Validation Error",$validator->error(),422);
         }
-        $user = User::create([
+        $user = $this->userRepository->store([
             'name' => $request->name,
             'email' => $request->email,
             'password' => Hash::make($request->password),
@@ -47,7 +54,7 @@ class UserController extends BaseController
     }
     public function update(Request $request,$id)
     {
-        $user = User::find($id);
+        $user = $this->userRepository->show($id);
         $validator = Validator::make($request->all(),[
             'name'=>'required|string',
             'email' => 'required|string',

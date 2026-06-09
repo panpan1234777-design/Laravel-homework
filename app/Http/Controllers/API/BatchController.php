@@ -5,22 +5,29 @@ namespace App\Http\Controllers\API;
 use App\Http\Controllers\API\BaseController;
 use App\Http\Requests\CreateBatchRequest;
 use App\Http\Requests\UpdateBatchRequest;
-use Illuminate\Http\Request;
 use App\Models\Batch;
+use App\Repositories\Batch\BatchRepositoryInterface;
+use Illuminate\Http\Request;
 
 class BatchController extends BaseController
 {
+    protected $batchRepository;
+    public function __construct(BatchRepositoryInterface $batchRepository)
+    {
+        $this->batchRepository = $batchRepository;
+    }
+
     public function index(){
-        $batches = Batch::with('instructors')->get();
+       $batches = $this->batchRepository->index();
         return $this->success($batches,"Successfully",200);
 
     }
     public function show($id){
-        $batch = Batch::with('instructors')->find($id);
+        $batch = $this->batchRepository->show($id);
         return $this->success($batch,"Batch show successfully",200);
     }
     public function delete($id){
-        $batch = Batch::find($id);
+        $batch = $this->batchRepository->show($id);
         $batch->delete();
         return $this->success($batch,"Batch delete successfully",200);
 
@@ -34,7 +41,7 @@ class BatchController extends BaseController
         $request->image->move(public_path('batchImages'), $imageName);
         $data['image'] = $imageName;
        }
-       $batch=Batch::create($data);
+       $batch= $this->batchRepository->store($data);
        $instructors = $request->input('instructor_ids',[]);
        $batch->instructors()->attach($instructors);
 
@@ -43,7 +50,7 @@ class BatchController extends BaseController
     }
     public function update(UpdateBatchRequest $request, $id)
     {
-        $batch = Batch::find($id);
+        $batch = $this->batchRepository->show($id);
         if(!$batch){
             return $this->error("Batch not found",[],404);
         }

@@ -4,15 +4,21 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\API\BaseController;
 use App\Models\Student;
+use App\Repositories\Student\StudentRepositoryInterface;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 
 class StudentController extends BaseController
 {
+    protected $studentRepository;
+    public function __construct(StudentRepositoryInterface $studentRepository)
+    {
+        $this->studentRepository = $studentRepository;
+    }
 
     public function index()
     {
-        $students = Student::with('batch')->get();
+        $students = $this->studentRepository->index();
         return $this->success($students, "Students with instructor retrieved successfully", 200);
     }
 
@@ -34,7 +40,7 @@ class StudentController extends BaseController
         }
 
         $data = $validator->validated();
-        $student = Student::create($data);
+        $student = $this->studentRepository->store($data);
 
         return $this->success($student, "Student created successfully", 201);
     }
@@ -47,7 +53,7 @@ class StudentController extends BaseController
 
     public function update(Request $request, $id)
     {
-        $student = Student::find($id);
+        $student = $this->studentRepository->show($id);
 
         $validator = Validator::make($request->all(), [
             'name'          => 'required|string',
@@ -68,7 +74,7 @@ class StudentController extends BaseController
 
     public function delete($id)
     {
-        $student = Student::find($id);
+        $student = $this->studentRepository->show($id);
         $student->delete();
 
         return $this->success(null, "Student deleted successfully", 200);

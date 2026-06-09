@@ -15,6 +15,7 @@ use App\Repositories\Role\RoleRepository;
 use App\Repositories\Role\RoleRepositoryInterface;
 use App\Repositories\Student\StudentRepository;
 use App\Repositories\Student\StudentRepositoryInterface;
+use App\Repositories\User\UserRepositoryInterface;
 use Illuminate\Support\ServiceProvider;
 
 class RepositoryServiceProvider extends ServiceProvider
@@ -38,5 +39,6 @@ class RepositoryServiceProvider extends ServiceProvider
         $this->app->singleton(StudentRepositoryInterface::class, StudentRepository::class);
         $this->app->singleton(PermissionRepositoryInterface::class,PermissionRepository::class);
         $this->app->singleton(RoleRepositoryInterface::class,RoleRepository::class);
+        $this->app->singleton(UserRepositoryInterface::class,UserRepository::class);
     }
 }
